@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>RJE · Methodology</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --paper:#ffffff;--paper-2:#f5f5f7;
+  --ink:#15181d;--ink-2:#3a4049;--ink-3:#6b7280;--ink-4:#9aa0a8;
+  --rule:#d4d4d8;--rule-2:#ececef;
+  --accent:#2a4d6e;--accent-soft:#e8eef5;--warn:#9c6b00;
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'Inter','Segoe UI',sans-serif;
+  --mono:'JetBrains Mono','SF Mono',Consolas,monospace;
+}
+@page { size: A4; margin: 22mm 20mm 22mm 20mm; }
+html{font-size:15px}
+body{font-family:var(--sans);color:var(--ink);background:var(--paper);line-height:1.65;-webkit-font-smoothing:antialiased}
+.page{max-width:760px;margin:0 auto;padding:40px 50px 60px}
+
+.cover{page-break-after:always;min-height:calc(297mm - 44mm);display:flex;flex-direction:column;position:relative}
+.cover-strip{display:flex;justify-content:space-between;align-items:center;padding-bottom:18px;border-bottom:1px solid var(--ink);font-family:var(--mono);font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink-2)}
+.cover-strip strong{color:var(--ink);font-weight:600}
+.cover-body{flex:1;padding-top:80px}
+.cover-eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:24px}
+.cover-title{font-family:var(--serif);font-size:56px;font-weight:600;letter-spacing:-0.015em;line-height:1.05;color:var(--ink);margin-bottom:18px}
+.cover-subtitle{font-family:var(--serif);font-size:22px;font-weight:400;font-style:italic;color:var(--ink-2);line-height:1.4;max-width:46ch;margin-bottom:60px}
+.cover-meta{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--rule);padding-top:22px;margin-top:auto}
+.cover-meta > div{padding-right:24px}
+.cover-meta dt{font-family:var(--mono);font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:var(--ink-3);margin-bottom:6px}
+.cover-meta dd{font-family:var(--serif);font-size:16px;font-weight:600;color:var(--ink)}
+.cover-footer{margin-top:24px;padding-top:18px;border-top:1px solid var(--ink);display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;letter-spacing:0.06em;color:var(--ink-3)}
+
+.body section{padding:36px 0;border-bottom:1px solid var(--rule-2)}
+.body section:last-child{border-bottom:none}
+.body section.no-break{page-break-inside:avoid}
+.sec-num{font-family:var(--mono);font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:10px}
+h1.sec-title{font-family:var(--serif);font-size:32px;font-weight:600;letter-spacing:-0.01em;line-height:1.15;margin-bottom:14px}
+h2{font-family:var(--serif);font-size:20px;font-weight:600;margin-top:26px;margin-bottom:10px}
+h3{font-family:var(--sans);font-size:13px;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;color:var(--ink-3);margin-top:20px;margin-bottom:8px}
+p{font-size:13.5px;color:var(--ink-2);line-height:1.7;margin-bottom:11px;max-width:64ch}
+p strong{color:var(--ink);font-weight:600}
+ul,ol{margin:8px 0 14px 22px}
+li{font-size:13.5px;color:var(--ink-2);line-height:1.7;margin-bottom:5px;max-width:62ch}
+code{font-family:var(--mono);font-size:11.5px;background:var(--paper-2);padding:1px 5px;border-radius:3px;border:1px solid var(--rule-2);color:var(--ink)}
+
+.callout{display:flex;gap:14px;padding:14px 16px;margin:14px 0;border-left:3px solid var(--accent);background:var(--accent-soft);border-radius:0 4px 4px 0;page-break-inside:avoid}
+.callout .label{font-family:var(--mono);font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent);font-weight:600;flex-shrink:0;padding-top:2px;min-width:70px}
+.callout p{font-size:12.5px;color:var(--ink);margin:0;line-height:1.6;max-width:none}
+.callout.warn{border-left-color:var(--warn);background:rgba(156,107,0,0.06)}
+.callout.warn .label{color:var(--warn)}
+
+ol.stages{list-style:none;margin-left:0;counter-reset:stage}
+ol.stages > li{
+  counter-increment:stage;
+  padding:18px 0 18px 64px;border-bottom:1px solid var(--rule-2);
+  position:relative;page-break-inside:avoid;
+}
+ol.stages > li:last-child{border-bottom:none}
+ol.stages > li::before{
+  content:counter(stage,decimal-leading-zero);
+  position:absolute;left:0;top:18px;
+  font-family:var(--mono);font-size:14px;color:var(--accent);font-weight:600;letter-spacing:0.08em;
+}
+ol.stages .stage-title{
+  display:block;font-family:var(--serif);font-size:19px;font-weight:600;color:var(--ink);
+  margin-bottom:6px;
+}
+
+.perspective-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0;
+}
+.perspective-card{
+  padding:14px 16px;border:1px solid var(--rule);border-radius:4px;background:var(--paper);
+  page-break-inside:avoid;
+}
+.perspective-card .pname{font-family:var(--serif);font-size:15px;font-weight:600;color:var(--ink);margin-bottom:4px}
+.perspective-card p{font-size:12.5px;line-height:1.55;margin:0;max-width:none;color:var(--ink-2)}
+
+.colophon{margin-top:48px;padding-top:20px;border-top:1px solid var(--ink);font-family:var(--mono);font-size:9.5px;letter-spacing:0.04em;color:var(--ink-3);line-height:1.6}
+.colophon strong{color:var(--ink);font-weight:600}
+@media print{
+  body{background:#fff}
+  .page{padding:0;max-width:none}
+  .callout,.perspective-card{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<section class="cover">
+  <div class="cover-strip">
+    <span><strong>LLULL LAB</strong> · STUDIO LLULL · PARIS</span>
+    <span>Document 02 · v1.0</span>
+  </div>
+  <div class="cover-body">
+    <div class="cover-eyebrow">Reflective Judgment Engine</div>
+    <h1 class="cover-title">Methodology</h1>
+    <p class="cover-subtitle">How RJE arrives at a decision. Written to be read by a non-technical committee, and to survive their scrutiny.</p>
+    <dl class="cover-meta">
+      <div><dt>Audience</dt><dd>Committee &amp; Counsel</dd></div>
+      <div><dt>Version</dt><dd>1.0</dd></div>
+      <div><dt>Issued</dt><dd>May 2026</dd></div>
+    </dl>
+  </div>
+  <div class="cover-footer">
+    <span>llulllab.com / RJE</span>
+    <span>growth.business@llulllab.com</span>
+  </div>
+</section>
+
+<div class="body">
+
+<section>
+  <div class="sec-num">01 · Premise</div>
+  <h1 class="sec-title">Why a deliberation, not a verdict.</h1>
+  <p>Most computational decision tools answer questions. RJE answers them <strong>and shows its working</strong>. The output is a deliberation rather than a verdict: a framing report, five independent expert analyses, a recorded vote, a written rationale, and a signed safety screen. Each part is intelligible without the others; together they form a record an ethics board or a regulator can review on its own terms.</p>
+  <p>This shape was chosen because ethical decisions rarely admit a single correct answer. What committees, compliance officers, and human-oversight functions need is not a label but <strong>a defensible record of reasoning</strong>: who considered what, what was weighed against what, and what remained unresolved. RJE produces that record on schedule.</p>
+</section>
+
+<section>
+  <div class="sec-num">02 · The six-stage pipeline</div>
+  <h1 class="sec-title">Six stages from case to decision.</h1>
+  <p>Each deliberation passes through a structured computational pipeline. Every stage is auditable; every stage's output is persisted; every stage can be reproduced from the case record.</p>
+
+  <ol class="stages">
+    <li>
+      <span class="stage-title">Case framing</span>
+      <p>Before deliberation begins, the system produces a preliminary analysis that defines what approval, rejection, and modification would concretely entail for the case at hand. This grounds the five evaluators in the same operational frame and prevents them from talking past one another.</p>
+    </li>
+    <li>
+      <span class="stage-title">Five-perspective evaluation</span>
+      <p>Five independent evaluators consider the case in parallel. Each produces its own analysis, position, and reasoning. They do not see one another's output; their independence is structural. Each evaluator's perspective is described below.</p>
+    </li>
+    <li>
+      <span class="stage-title">Precedent grounding</span>
+      <p>Every new case is evaluated in light of prior cases held in the precedent library. The system identifies relevant prior cases and incorporates them into the deliberation. As the library grows, deliberation quality improves over time. Enterprise customers may maintain a private precedent namespace.</p>
+    </li>
+    <li>
+      <span class="stage-title">Vote and synthesis</span>
+      <p>The five positions are tallied. A confidence score is derived from the vote distribution and the depth of expert agreement. A synthesised decision rationale reconciles agreement and dissent without erasing either. The dissenting positions remain on record.</p>
+    </li>
+    <li>
+      <span class="stage-title">Anti-Totalitarianism safety screen</span>
+      <p>Every output passes through a dedicated safety mechanism that screens for extreme risk patterns: rights suppression, due-process erosion, disproportionate coercion. If the screen detects such patterns, the system halts and refuses to issue a decision. The safety mechanism is designed to err on the side of caution. It is by design not bypassable through the API surface.</p>
+    </li>
+    <li>
+      <span class="stage-title">Decision document</span>
+      <p>The system synthesises a reasoned decision document that includes the framing report, the final decision, the rationale, the vote distribution, and the five anonymised expert analyses. The document is returned both as plain text and as a formatted DOCX, suitable for filing in an audit trail.</p>
+    </li>
+  </ol>
+</section>
+
+<section>
+  <div class="sec-num">03 · The five perspectives</div>
+  <h1 class="sec-title">What each evaluator brings.</h1>
+  <p>The five evaluators consider the case from distinct analytical angles. They are anonymised to the user as <code>EXPERT_01</code> through <code>EXPERT_05</code>; their internal disciplinary frames are described below.</p>
+
+  <div class="perspective-grid">
+    <div class="perspective-card">
+      <div class="pname">Institutional governance</div>
+      <p>Whether the decision is consistent with the institution's mandate, internal policy, and prior precedent. Where institutional commitments would be strained, this is named.</p>
+    </div>
+    <div class="perspective-card">
+      <div class="pname">Legal compliance</div>
+      <p>Whether the decision is consistent with applicable law and regulation, including the constraints supplied with the case. Statutory exposure is named where present.</p>
+    </div>
+    <div class="perspective-card">
+      <div class="pname">Normative ethics</div>
+      <p>Whether the decision is defensible on principle, independent of legal compliance. Conflicts between normative frameworks are surfaced rather than dissolved.</p>
+    </div>
+    <div class="perspective-card">
+      <div class="pname">Practical feasibility</div>
+      <p>Whether the decision is operationally workable. Concerns about implementation cost, second-order effects, or affected workflows are named here rather than glossed.</p>
+    </div>
+    <div class="perspective-card" style="grid-column:1 / -1">
+      <div class="pname">Fundamental rights</div>
+      <p>Whether the decision respects the fundamental rights of the affected parties. This perspective is consulted on every case regardless of domain and contributes the substantive material a Fundamental Rights Impact Assessment expects to find.</p>
+    </div>
+  </div>
+
+  <h3>Why anonymity</h3>
+  <p>Expert identities are anonymised by design. <code>EXPERT_01</code> through <code>EXPERT_05</code> are stable per-case labels but carry no methodological metadata. This foregrounds the reasoning over the methodology, which matters for two reasons. First, internal committees evaluate decisions on their substance rather than on the institutional weight of a label. Second, the design discourages selective citation of the evaluator that happened to agree with you.</p>
+</section>
+
+<section class="no-break">
+  <div class="sec-num">04 · The safety screen</div>
+  <h1 class="sec-title">The Anti-Totalitarianism Module.</h1>
+  <p>RJE is deployed in contexts where the cost of an unchecked output is asymmetric: a missed deliberation is a delay, but an authoritative-looking decision endorsing a rights violation is a harm. The Anti-Totalitarianism Module is the system's mechanism for refusing to produce such an output.</p>
+
+  <p>The module screens every deliberation, before release, for extreme risk patterns: rights suppression, due-process erosion, disproportionate coercion, structural concentration of power. When such patterns are detected, the system halts and returns <code>status: "halted"</code> with an explanatory note. No decision body is returned. Halts are not billed.</p>
+
+  <div class="callout warn">
+    <div class="label">By design</div>
+    <p>The safety screen is designed to err on the side of caution and to be non-bypassable through the API surface. A halt is a signal for human review, not a transient error. Repeated submission of the same case will produce the same outcome.</p>
+  </div>
+
+  <h3>What halted does not mean</h3>
+  <p>A halt is not a verdict that the underlying case is unethical. It is a verdict that <strong>this system declines to issue a decision on this case</strong>, because the reasoning surface it would produce is not safe to rely on. Cases that halt should be routed to a human reviewer, not retried.</p>
+</section>
+
+<section>
+  <div class="sec-num">05 · What survives scrutiny</div>
+  <h1 class="sec-title">The audit profile of a decision.</h1>
+  <p>Every completed deliberation carries the following on record. This is the material a committee or a regulator may consult; it is also the material on which RJE asks to be evaluated.</p>
+
+  <ul>
+    <li><strong>Framing report</strong> — what approve, reject, and modify concretely meant for this case before deliberation began.</li>
+    <li><strong>Five expert analyses</strong> — independent, anonymised, written out. Dissent is preserved.</li>
+    <li><strong>Vote distribution</strong> — the recorded tally across <code>approve</code>, <code>reject</code>, <code>modify</code>.</li>
+    <li><strong>Confidence score</strong> — a numeric reflection of agreement, ranging 0.00 to 1.00.</li>
+    <li><strong>Decision rationale</strong> — synthesised written reasoning supporting the final decision.</li>
+    <li><strong>Safety screen verdict</strong> — that the output passed (or, where halted, that it did not).</li>
+    <li><strong>DOCX archive</strong> — a single document carrying all of the above, suitable for filing.</li>
+  </ul>
+
+  <h3>What is not on record</h3>
+  <p>The infrastructure underneath the deliberation is proprietary and model-agnostic by design. RJE selects and combines the best available reasoning engines for each function; specific engines are not disclosed and are not part of the public contract. The output is the contract.</p>
+</section>
+
+<section class="no-break">
+  <div class="sec-num">06 · How quality changes over time</div>
+  <h1 class="sec-title">Precedent grows; deliberation improves.</h1>
+  <p>RJE does not pretend to be static. The precedent library accumulates as cases are deliberated, and the system identifies relevant prior cases on every new submission. Two consequences follow.</p>
+  <ul>
+    <li>Deliberation quality on recurring categories of case improves with use. Organisations that submit similar cases repeatedly see tighter rationales over time.</li>
+    <li>The library evolves under version control. Outputs are reproducible from the case record; precedent shifts are auditable.</li>
+  </ul>
+  <p>Enterprise customers may keep their precedent base private (a private namespace), so that the precedent serving their deliberations does not include cases submitted by other organisations and vice versa.</p>
+</section>
+
+<section>
+  <div class="sec-num">07 · What RJE is not</div>
+  <h1 class="sec-title">Boundaries of the claim.</h1>
+  <ul>
+    <li><strong>Not a substitute for human judgement.</strong> RJE supports decision-making by producing a structured record; the decision itself remains the responsibility of the deploying institution.</li>
+    <li><strong>Not a compliance certification.</strong> RJE's output supports documentation and oversight obligations under the EU AI Act and related regimes. It does not certify compliance and is not a substitute for a notified body.</li>
+    <li><strong>Not deterministic.</strong> Submitting the same case twice produces two distinct decisions. Where stable archival is required, the first <code>case_id</code> should be stored and not resubmitted.</li>
+    <li><strong>Not a chatbot.</strong> RJE is a deliberation interface, not a conversational one. There is no dialogue surface, no instruction window to manipulate, no jailbreak to attempt. The deliberation takes a case as input and returns a structured record as output.</li>
+  </ul>
+</section>
+
+<div class="colophon">
+  <p><strong>Reflective Judgment Engine · Methodology · v1.0</strong> &nbsp; · &nbsp; Llull Lab &middot; Studio Llull &middot; Paris &nbsp; · &nbsp; growth.business@llulllab.com &nbsp; · &nbsp; llulllab.com/RJE</p>
+  <p>This document describes RJE's externally observable methodology. The internal implementation is proprietary. &copy; 2026 Llull Lab.</p>
+</div>
+
+</div>
+</div>
+</body>
+</html>

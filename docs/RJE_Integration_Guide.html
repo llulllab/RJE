@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>RJE · Integration Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --paper:#ffffff;
+  --paper-2:#f5f5f7;
+  --ink:#15181d;
+  --ink-2:#3a4049;
+  --ink-3:#6b7280;
+  --ink-4:#9aa0a8;
+  --rule:#d4d4d8;
+  --rule-2:#ececef;
+  --accent:#2a4d6e;
+  --accent-soft:#e8eef5;
+  --warn:#9c6b00;
+  --code-bg:#1a1f27;
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'Inter','Segoe UI',sans-serif;
+  --mono:'JetBrains Mono','SF Mono',Consolas,monospace;
+}
+
+@page { size: A4; margin: 22mm 20mm 22mm 20mm; }
+
+html{font-size:15px}
+body{
+  font-family:var(--sans);
+  color:var(--ink);
+  background:var(--paper);
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+
+.page{
+  max-width:760px;
+  margin:0 auto;
+  padding:40px 50px 60px;
+}
+
+/* ── Cover ── */
+.cover{
+  page-break-after:always;
+  min-height:calc(297mm - 44mm);
+  display:flex;flex-direction:column;
+  position:relative;
+}
+.cover-strip{
+  display:flex;justify-content:space-between;align-items:center;
+  padding-bottom:18px;border-bottom:1px solid var(--ink);
+  font-family:var(--mono);font-size:10px;letter-spacing:0.18em;
+  text-transform:uppercase;color:var(--ink-2);
+}
+.cover-strip strong{color:var(--ink);font-weight:600}
+.cover-body{flex:1;padding-top:80px}
+.cover-eyebrow{
+  font-family:var(--mono);font-size:11px;letter-spacing:0.18em;
+  text-transform:uppercase;color:var(--accent);font-weight:600;
+  margin-bottom:24px;
+}
+.cover-title{
+  font-family:var(--serif);font-size:56px;font-weight:600;
+  letter-spacing:-0.015em;line-height:1.05;color:var(--ink);
+  margin-bottom:18px;
+}
+.cover-subtitle{
+  font-family:var(--serif);font-size:22px;font-weight:400;
+  font-style:italic;color:var(--ink-2);line-height:1.4;
+  max-width:46ch;margin-bottom:60px;
+}
+.cover-meta{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  border-top:1px solid var(--rule);padding-top:22px;
+  margin-top:auto;
+}
+.cover-meta > div{padding-right:24px}
+.cover-meta dt{
+  font-family:var(--mono);font-size:9px;letter-spacing:0.16em;
+  text-transform:uppercase;color:var(--ink-3);margin-bottom:6px;
+}
+.cover-meta dd{
+  font-family:var(--serif);font-size:16px;font-weight:600;color:var(--ink);
+}
+.cover-footer{
+  margin-top:24px;padding-top:18px;border-top:1px solid var(--ink);
+  display:flex;justify-content:space-between;
+  font-family:var(--mono);font-size:10px;letter-spacing:0.06em;
+  color:var(--ink-3);
+}
+
+/* ── Body ── */
+.body section{padding:36px 0;border-bottom:1px solid var(--rule-2)}
+.body section:last-child{border-bottom:none}
+.body section.no-break{page-break-inside:avoid}
+.sec-num{
+  font-family:var(--mono);font-size:11px;letter-spacing:0.16em;
+  text-transform:uppercase;color:var(--accent);font-weight:600;
+  margin-bottom:10px;
+}
+h1.sec-title{
+  font-family:var(--serif);font-size:32px;font-weight:600;
+  letter-spacing:-0.01em;line-height:1.15;margin-bottom:14px;
+}
+h2{
+  font-family:var(--serif);font-size:20px;font-weight:600;
+  margin-top:26px;margin-bottom:10px;
+}
+h3{
+  font-family:var(--sans);font-size:13px;font-weight:600;
+  letter-spacing:0.04em;text-transform:uppercase;color:var(--ink-3);
+  margin-top:20px;margin-bottom:8px;
+}
+p{font-size:13.5px;color:var(--ink-2);line-height:1.7;margin-bottom:11px;max-width:64ch}
+p strong{color:var(--ink);font-weight:600}
+ul,ol{margin:8px 0 14px 22px}
+li{font-size:13.5px;color:var(--ink-2);line-height:1.7;margin-bottom:5px;max-width:62ch}
+
+code{
+  font-family:var(--mono);font-size:11.5px;
+  background:var(--paper-2);padding:1px 5px;border-radius:3px;
+  border:1px solid var(--rule-2);color:var(--ink);
+}
+
+pre.code{
+  background:var(--code-bg);color:#e8e6df;
+  font-family:var(--mono);font-size:11px;line-height:1.6;
+  padding:18px 20px;border-radius:4px;
+  overflow-x:auto;white-space:pre;
+  margin:12px 0;
+  page-break-inside:avoid;
+}
+pre.code .k{color:#a8c6e0}
+pre.code .s{color:#9bcf9b}
+pre.code .c{color:#6b7280;font-style:italic}
+
+.callout{
+  display:flex;gap:14px;padding:14px 16px;margin:14px 0;
+  border-left:3px solid var(--accent);background:var(--accent-soft);
+  border-radius:0 4px 4px 0;page-break-inside:avoid;
+}
+.callout .label{
+  font-family:var(--mono);font-size:9px;letter-spacing:0.16em;
+  text-transform:uppercase;color:var(--accent);font-weight:600;
+  flex-shrink:0;padding-top:2px;min-width:70px;
+}
+.callout p{font-size:12.5px;color:var(--ink);margin:0;line-height:1.6;max-width:none}
+.callout.warn{border-left-color:var(--warn);background:rgba(156,107,0,0.06)}
+.callout.warn .label{color:var(--warn)}
+
+table.fields{
+  width:100%;border-collapse:collapse;font-size:12px;margin:12px 0;
+  border:1px solid var(--rule);page-break-inside:avoid;
+}
+table.fields th,table.fields td{
+  text-align:left;padding:9px 12px;border-bottom:1px solid var(--rule-2);vertical-align:top;
+}
+table.fields tr:last-child td{border-bottom:none}
+table.fields th{
+  font-family:var(--mono);font-size:9px;letter-spacing:0.14em;
+  text-transform:uppercase;color:var(--ink-3);font-weight:600;
+  background:var(--paper-2);
+}
+table.fields td.fname{font-family:var(--mono);font-size:11px;color:var(--ink);white-space:nowrap}
+table.fields td.ftype{font-family:var(--mono);font-size:10.5px;color:var(--ink-3);white-space:nowrap}
+table.fields td.fdesc{color:var(--ink-2);line-height:1.55}
+
+.status-row{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0}
+.chip{
+  display:inline-flex;align-items:center;gap:7px;
+  font-family:var(--mono);font-size:10px;color:var(--ink-2);
+  padding:5px 10px;border:1px solid var(--rule);border-radius:99px;
+}
+.chip .dot{width:6px;height:6px;border-radius:50%}
+.chip .dot.ok{background:#2f6b3d}
+.chip .dot.warn{background:#9c6b00}
+.chip .dot.bad{background:#9b2a2a}
+.chip .dot.halt{background:#7a1a1a}
+
+.colophon{
+  margin-top:48px;padding-top:20px;
+  border-top:1px solid var(--ink);
+  font-family:var(--mono);font-size:9.5px;letter-spacing:0.04em;
+  color:var(--ink-3);line-height:1.6;
+}
+.colophon strong{color:var(--ink);font-weight:600}
+
+@media print{
+  body{background:#fff}
+  .page{padding:0;max-width:none}
+  pre.code{background:#1a1f27;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .callout,table.fields th{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- ─── COVER ─── -->
+<section class="cover">
+  <div class="cover-strip">
+    <span><strong>LLULL LAB</strong> · STUDIO LLULL · PARIS</span>
+    <span>Document 01 · v1.0</span>
+  </div>
+
+  <div class="cover-body">
+    <div class="cover-eyebrow">Reflective Judgment Engine</div>
+    <h1 class="cover-title">Integration Guide</h1>
+    <p class="cover-subtitle">Quickstart, schema, error handling, and retry semantics for engineers integrating RJE into a compliance workflow.</p>
+
+    <dl class="cover-meta">
+      <div><dt>Audience</dt><dd>Engineering</dd></div>
+      <div><dt>Version</dt><dd>1.0</dd></div>
+      <div><dt>Issued</dt><dd>May 2026</dd></div>
+    </dl>
+  </div>
+
+  <div class="cover-footer">
+    <span>llulllab.com / RJE</span>
+    <span>growth.business@llulllab.com</span>
+  </div>
+</section>
+
+<!-- ─── BODY ─── -->
+<div class="body">
+
+<section>
+  <div class="sec-num">01 · Overview</div>
+  <h1 class="sec-title">A single endpoint. A complete deliberation.</h1>
+  <p>RJE exposes one operation: submit a case, receive a structured decision. The response contains a framing report, a synthesised decision, the five independent expert analyses, a vote distribution, and a fully formatted DOCX suitable for archival.</p>
+  <p>There is no SDK to install, no message queue to provision, no callback URL to register. A single HTTPS request returns the full audit-grade output in seconds.</p>
+</section>
+
+<section class="no-break">
+  <div class="sec-num">02 · Authentication</div>
+  <h1 class="sec-title">Session tokens.</h1>
+  <p>API access is provisioned per organisation against a tier (Starter, Growth, Enterprise). Request access by writing to <code>growth.business@llulllab.com</code> with the tier you intend, the contracting entity, and the expected use case. A session token is issued by return.</p>
+  <p>The session token is passed in the <code>X-Session-Token</code> header on every request. Tokens are scoped to a single organisation and may be rotated on request. Token lifecycle, including expiry and rotation policy, is set at access provisioning.</p>
+
+  <div class="callout warn">
+    <div class="label">Custody</div>
+    <p>Treat the session token as a production secret. Storage in a managed secret vault is recommended. Rotation on personnel change is recommended. Compromise should be reported to <code>growth.business@llulllab.com</code> for immediate revocation.</p>
+  </div>
+</section>
+
+<section>
+  <div class="sec-num">03 · The request</div>
+  <h1 class="sec-title">Submit a case for deliberation.</h1>
+  <p>The endpoint is <code>POST https://api.llulllab.com/rje/v1/deliberate</code>. Content type is <code>application/json</code>. The minimum viable request carries a description, a domain, and the session token.</p>
+
+<pre class="code"><span class="c"># Submit a case for deliberation</span>
+curl -X POST https://api.llulllab.com/rje/v1/deliberate \
+  -H <span class="s">"X-Session-Token: $RJE_TOKEN"</span> \
+  -H <span class="s">"Content-Type: application/json"</span> \
+  -d <span class="s">'{
+    "description":  "Should the new staff scheduling algorithm be approved given Article 22 of the GDPR concerning automated decisions affecting workers?",
+    "domain":       "data_privacy",
+    "urgency":      "normal",
+    "constraints":  ["GDPR Article 22 compliance required"],
+    "stakeholders": ["employees", "DPO", "operations"]
+  }'</span></pre>
+
+  <h3>Request fields</h3>
+  <table class="fields">
+    <thead><tr><th style="width:22%">Field</th><th style="width:18%">Type</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td class="fname">description</td><td class="ftype">string · required</td><td class="fdesc">Case description, 40 to 4,000 characters. State the decision to be made, not just the topic.</td></tr>
+      <tr><td class="fname">domain</td><td class="ftype">enum · required</td><td class="fdesc"><code>data_privacy</code>, <code>safety</code>, <code>fairness</code>, <code>transparency</code>, <code>governance</code>, or <code>other</code>. Shapes which slice of the precedent library is consulted.</td></tr>
+      <tr><td class="fname">urgency</td><td class="ftype">enum · optional</td><td class="fdesc"><code>low</code>, <code>normal</code>, <code>high</code>, <code>critical</code>. Recorded in the audit trail; does not change deliberation quality.</td></tr>
+      <tr><td class="fname">context</td><td class="ftype">object · optional</td><td class="fdesc">Free-form supplementary material (notes, prior approvals, internal references). Up to 16 KB.</td></tr>
+      <tr><td class="fname">constraints</td><td class="ftype">string[] · optional</td><td class="fdesc">Hard requirements that any acceptable decision must satisfy.</td></tr>
+      <tr><td class="fname">stakeholders</td><td class="ftype">string[] · optional</td><td class="fdesc">Parties whose interests the decision affects. Each is considered explicitly.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    <div class="label">Tip</div>
+    <p>Write the description as the decision to be made, not the topic. "Should we approve a new staff scheduling algorithm under GDPR Article 22?" deliberates better than "GDPR Article 22 review."</p>
+  </div>
+</section>
+
+<section>
+  <div class="sec-num">04 · The response</div>
+  <h1 class="sec-title">A structured, defensible decision.</h1>
+  <p>A successful response carries the full deliberation as a single JSON object. The most useful fields, in order of how compliance teams typically consume them: the final decision, the rationale, the vote distribution, the five expert analyses, and the DOCX archive.</p>
+
+<pre class="code">{
+  <span class="k">"status"</span>:              <span class="s">"completed"</span>,
+  <span class="k">"case_id"</span>:             <span class="s">"4a885535-90b1-..."</span>,
+  <span class="k">"preliminary_report"</span>:  <span class="s">"Framing of approve / reject / modify for this case ..."</span>,
+  <span class="k">"decision"</span>: {
+    <span class="k">"final_decision"</span>:     <span class="s">"modified"</span>,
+    <span class="k">"confidence_score"</span>:   0.94,
+    <span class="k">"decision_rationale"</span>: <span class="s">"..."</span>
+  },
+  <span class="k">"voting"</span>: {
+    <span class="k">"majority_decision"</span>:  <span class="s">"modified"</span>,
+    <span class="k">"vote_counts"</span>:        { <span class="k">"approve"</span>: 0, <span class="k">"reject"</span>: 0, <span class="k">"modify"</span>: 5 }
+  },
+  <span class="k">"expert_analyses"</span>: [
+    { <span class="k">"expert_id"</span>: <span class="s">"EXPERT_01"</span>, <span class="k">"position"</span>: <span class="s">"modify"</span>, <span class="k">"reasoning"</span>: <span class="s">"..."</span> },
+    <span class="c">// ... five evaluators total</span>
+  ],
+  <span class="k">"decision_document"</span>:    <span class="s">"Reasoned synthesis prepared for the audit trail ..."</span>,
+  <span class="k">"docx_base64"</span>:          <span class="s">"UEsDB..."</span>
+}</pre>
+
+  <h3>Response fields</h3>
+  <table class="fields">
+    <thead><tr><th style="width:26%">Field</th><th style="width:14%">Type</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td class="fname">status</td><td class="ftype">enum</td><td class="fdesc"><code>completed</code>, <code>halted</code>, <code>rejected</code>, or <code>error</code>.</td></tr>
+      <tr><td class="fname">case_id</td><td class="ftype">uuid</td><td class="fdesc">Stable identifier. Persisted in the audit trail and printed on the DOCX.</td></tr>
+      <tr><td class="fname">preliminary_report</td><td class="ftype">string</td><td class="fdesc">Case framing produced before deliberation. Defines what approve, reject, and modify concretely mean.</td></tr>
+      <tr><td class="fname">decision.final_decision</td><td class="ftype">enum</td><td class="fdesc"><code>approved</code>, <code>rejected</code>, <code>modified</code>.</td></tr>
+      <tr><td class="fname">decision.confidence_score</td><td class="ftype">float</td><td class="fdesc">Range 0.00 to 1.00. Derived from vote distribution and expert agreement.</td></tr>
+      <tr><td class="fname">decision.decision_rationale</td><td class="ftype">string</td><td class="fdesc">Synthesised reasoning supporting the final decision.</td></tr>
+      <tr><td class="fname">voting.majority_decision</td><td class="ftype">enum</td><td class="fdesc">Plurality outcome across the five evaluators.</td></tr>
+      <tr><td class="fname">voting.vote_counts</td><td class="ftype">object</td><td class="fdesc">Tally over <code>approve</code>, <code>reject</code>, <code>modify</code>.</td></tr>
+      <tr><td class="fname">expert_analyses</td><td class="ftype">array</td><td class="fdesc">Five entries, each carrying <code>expert_id</code>, <code>position</code>, <code>reasoning</code>. Expert identities are anonymised.</td></tr>
+      <tr><td class="fname">decision_document</td><td class="ftype">string</td><td class="fdesc">Full reasoned document. Same content as the DOCX, in plain text.</td></tr>
+      <tr><td class="fname">docx_base64</td><td class="ftype">string</td><td class="fdesc">Base64-encoded DOCX report. Decode and save for archival.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="no-break">
+  <div class="sec-num">05 · Status codes</div>
+  <h1 class="sec-title">Six outcomes worth handling.</h1>
+
+  <div class="status-row">
+    <span class="chip"><span class="dot ok"></span>200 · completed</span>
+    <span class="chip"><span class="dot halt"></span>200 · halted</span>
+    <span class="chip"><span class="dot warn"></span>400 · validation</span>
+    <span class="chip"><span class="dot bad"></span>401 · unauthenticated</span>
+    <span class="chip"><span class="dot warn"></span>429 · quota_exceeded</span>
+    <span class="chip"><span class="dot bad"></span>503 · transient_failure</span>
+  </div>
+
+  <h3>Halted</h3>
+  <p>The internal safety mechanism flagged the case for extreme risk patterns and refused to issue a decision. The response carries <code>status: "halted"</code> with an explanatory note but no decision body. Halts are deliberate, are not counted against quota, and should be routed to a human reviewer rather than retried.</p>
+
+  <h3>Validation (400)</h3>
+  <p>The request was rejected before deliberation. Common causes: description shorter than 40 characters, invalid domain enum, malformed JSON, payload exceeding 16 KB. Not billed.</p>
+
+  <h3>Unauthenticated (401)</h3>
+  <p>The session token is missing, malformed, or revoked. Verify the <code>X-Session-Token</code> header. Not billed.</p>
+
+  <h3>Quota exceeded (429)</h3>
+  <p>The tier's monthly included allowance, or a short-window rate limit, was exhausted. Overage pricing applies on tiers that permit it. Not billed when rejected.</p>
+
+  <h3>Transient failure (503)</h3>
+  <p>An upstream component briefly degraded. Safe to retry once after a short backoff. Auto-retry is performed internally; what reaches the client is a definitive verdict. Not billed.</p>
+</section>
+
+<section class="no-break">
+  <div class="sec-num">06 · Retry semantics</div>
+  <h1 class="sec-title">Idempotency and quota.</h1>
+  <p>Deliberation is computationally expensive; the platform protects you from accidentally double-billing.</p>
+  <ul>
+    <li><strong>Idempotency</strong> — submitting the same case twice produces two distinct <code>case_id</code> values and two distinct decisions. RJE is not deterministic; the precedent base shifts, the synthesis differs. If you require stable archival, store the first <code>case_id</code> and do not resubmit.</li>
+    <li><strong>Internal retries</strong> — transient infrastructure failures are retried internally and not surfaced as 503 unless the retry also failed. You generally do not need to implement retry logic.</li>
+    <li><strong>Quota accounting</strong> — only <code>completed</code> responses consume quota. Halts, validation rejections, unauthenticated rejections, transient failures, and rate-limit rejections do not.</li>
+  </ul>
+</section>
+
+<section>
+  <div class="sec-num">07 · Operational notes</div>
+  <h1 class="sec-title">What you can rely on.</h1>
+
+  <h3>Transport</h3>
+  <p>HTTPS only, encrypted in transit. Connection keep-alive is honoured.</p>
+
+  <h3>Latency</h3>
+  <p>Typical end-to-end latency for a completed deliberation is 30 to 90 seconds. The deliberation is not designed for synchronous user-facing flows; design your integration around asynchronous handoff to a reviewer queue, an email inbox, or an archival store.</p>
+
+  <h3>Audit trail</h3>
+  <p>Every deliberation is persisted with full lineage: input payload, framing report, expert analyses, vote distribution, decision document, DOCX. Case retention and retrieval terms are set per tier at access provisioning.</p>
+
+  <h3>Data residency</h3>
+  <p>Production infrastructure is hosted in the European Union. Deployment options for the Enterprise tier are discussed at contracting.</p>
+</section>
+
+<div class="colophon">
+  <p><strong>Reflective Judgment Engine · Integration Guide · v1.0</strong> &nbsp; · &nbsp; Llull Lab &middot; Studio Llull &middot; Paris &nbsp; · &nbsp; growth.business@llulllab.com &nbsp; · &nbsp; llulllab.com/RJE</p>
+  <p>This document is published as supporting material for the RJE service. The infrastructure underneath is proprietary and model-agnostic by design. &copy; 2026 Llull Lab.</p>
+</div>
+
+</div>
+</div>
+</body>
+</html>

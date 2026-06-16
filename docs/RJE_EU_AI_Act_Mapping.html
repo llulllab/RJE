@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>RJE · EU AI Act Mapping</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --paper:#ffffff;--paper-2:#f5f5f7;
+  --ink:#15181d;--ink-2:#3a4049;--ink-3:#6b7280;--ink-4:#9aa0a8;
+  --rule:#d4d4d8;--rule-2:#ececef;
+  --accent:#2a4d6e;--accent-soft:#e8eef5;--warn:#9c6b00;
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'Inter','Segoe UI',sans-serif;
+  --mono:'JetBrains Mono','SF Mono',Consolas,monospace;
+}
+@page { size: A4; margin: 22mm 20mm 22mm 20mm; }
+html{font-size:15px}
+body{font-family:var(--sans);color:var(--ink);background:var(--paper);line-height:1.65;-webkit-font-smoothing:antialiased}
+.page{max-width:760px;margin:0 auto;padding:40px 50px 60px}
+
+.cover{page-break-after:always;min-height:calc(297mm - 44mm);display:flex;flex-direction:column;position:relative}
+.cover-strip{display:flex;justify-content:space-between;align-items:center;padding-bottom:18px;border-bottom:1px solid var(--ink);font-family:var(--mono);font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink-2)}
+.cover-strip strong{color:var(--ink);font-weight:600}
+.cover-body{flex:1;padding-top:80px}
+.cover-eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:24px}
+.cover-title{font-family:var(--serif);font-size:52px;font-weight:600;letter-spacing:-0.015em;line-height:1.05;color:var(--ink);margin-bottom:18px}
+.cover-subtitle{font-family:var(--serif);font-size:22px;font-weight:400;font-style:italic;color:var(--ink-2);line-height:1.4;max-width:46ch;margin-bottom:60px}
+.cover-meta{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--rule);padding-top:22px;margin-top:auto}
+.cover-meta > div{padding-right:24px}
+.cover-meta dt{font-family:var(--mono);font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:var(--ink-3);margin-bottom:6px}
+.cover-meta dd{font-family:var(--serif);font-size:16px;font-weight:600;color:var(--ink)}
+.cover-footer{margin-top:24px;padding-top:18px;border-top:1px solid var(--ink);display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;letter-spacing:0.06em;color:var(--ink-3)}
+
+.body section{padding:36px 0;border-bottom:1px solid var(--rule-2)}
+.body section:last-child{border-bottom:none}
+.body section.no-break{page-break-inside:avoid}
+.sec-num{font-family:var(--mono);font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:10px}
+h1.sec-title{font-family:var(--serif);font-size:32px;font-weight:600;letter-spacing:-0.01em;line-height:1.15;margin-bottom:14px}
+h2{font-family:var(--serif);font-size:20px;font-weight:600;margin-top:26px;margin-bottom:10px}
+h3{font-family:var(--sans);font-size:13px;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;color:var(--ink-3);margin-top:20px;margin-bottom:8px}
+p{font-size:13.5px;color:var(--ink-2);line-height:1.7;margin-bottom:11px;max-width:64ch}
+p strong{color:var(--ink);font-weight:600}
+ul,ol{margin:8px 0 14px 22px}
+li{font-size:13.5px;color:var(--ink-2);line-height:1.7;margin-bottom:5px;max-width:62ch}
+code{font-family:var(--mono);font-size:11.5px;background:var(--paper-2);padding:1px 5px;border-radius:3px;border:1px solid var(--rule-2);color:var(--ink)}
+
+.callout{display:flex;gap:14px;padding:14px 16px;margin:14px 0;border-left:3px solid var(--accent);background:var(--accent-soft);border-radius:0 4px 4px 0;page-break-inside:avoid}
+.callout .label{font-family:var(--mono);font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent);font-weight:600;flex-shrink:0;padding-top:2px;min-width:70px}
+.callout p{font-size:12.5px;color:var(--ink);margin:0;line-height:1.6;max-width:none}
+.callout.warn{border-left-color:var(--warn);background:rgba(156,107,0,0.06)}
+.callout.warn .label{color:var(--warn)}
+
+table.act{width:100%;border-collapse:collapse;font-size:12px;margin:14px 0;border:1px solid var(--rule);page-break-inside:avoid}
+table.act th,table.act td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--rule-2);vertical-align:top}
+table.act tr:last-child td{border-bottom:none}
+table.act th{font-family:var(--mono);font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink-3);font-weight:600;background:var(--paper-2)}
+table.act td.art{font-family:var(--mono);font-size:11px;color:var(--accent);font-weight:600;white-space:nowrap}
+table.act td.req{color:var(--ink);font-weight:500;font-size:12.5px}
+table.act td.role{color:var(--ink-2);line-height:1.55;font-size:12px}
+
+.timeline{margin:14px 0;padding:0;list-style:none;position:relative}
+.timeline li{position:relative;padding:8px 0 8px 32px;border-left:1px solid var(--rule);margin-left:8px}
+.timeline li::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--accent);position:absolute;left:-5px;top:14px}
+.timeline li .date{font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);font-weight:600;display:block;margin-bottom:3px}
+.timeline li .what{font-family:var(--serif);font-size:15px;font-weight:600;color:var(--ink);display:block;margin-bottom:3px}
+.timeline li p{font-size:12.5px;margin:0;max-width:none}
+
+.colophon{margin-top:48px;padding-top:20px;border-top:1px solid var(--ink);font-family:var(--mono);font-size:9.5px;letter-spacing:0.04em;color:var(--ink-3);line-height:1.6}
+.colophon strong{color:var(--ink);font-weight:600}
+@media print{
+  body{background:#fff}
+  .page{padding:0;max-width:none}
+  .callout,table.act th{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<section class="cover">
+  <div class="cover-strip">
+    <span><strong>LLULL LAB</strong> · STUDIO LLULL · PARIS</span>
+    <span>Document 03 · v1.0</span>
+  </div>
+  <div class="cover-body">
+    <div class="cover-eyebrow">Reflective Judgment Engine</div>
+    <h1 class="cover-title">EU AI Act Mapping</h1>
+    <p class="cover-subtitle">Article-level mapping of RJE's audit output onto the high-risk regime. Written for compliance, legal, and data-protection functions.</p>
+    <dl class="cover-meta">
+      <div><dt>Audience</dt><dd>Compliance &amp; Legal</dd></div>
+      <div><dt>Version</dt><dd>1.0</dd></div>
+      <div><dt>Issued</dt><dd>May 2026</dd></div>
+    </dl>
+  </div>
+  <div class="cover-footer">
+    <span>llulllab.com / RJE</span>
+    <span>growth.business@llulllab.com</span>
+  </div>
+</section>
+
+<div class="body">
+
+<section>
+  <div class="sec-num">01 · Scope</div>
+  <h1 class="sec-title">What this document does, and does not, claim.</h1>
+  <p>The EU AI Act (Regulation 2024/1689) establishes a risk-based framework for AI systems placed on the Union market. The high-risk regime in Title III places concrete documentation, oversight, and record-keeping obligations on providers and deployers of high-risk systems.</p>
+  <p>This document maps the specific outputs RJE produces onto the Articles where they support the obligations of a high-risk provider or deployer. It is positioned as <strong>documentation support material</strong>, not as a compliance certification.</p>
+
+  <p>The high-risk classification (Art. 6 and Annex III) is determined by the deployer against its own system and use case. RJE does not classify; it supports the documentation and oversight regime that follows from a classification the deployer has already made.</p>
+
+  <div class="callout warn">
+    <div class="label">Boundary</div>
+    <p>RJE supports documentation and oversight obligations. Conformity assessment, CE marking, registration in the EU database, and the substantive determination of high-risk classification remain the provider's responsibility. RJE is neither a notified body nor a substitute for legal advice.</p>
+  </div>
+</section>
+
+<section class="no-break">
+  <div class="sec-num">02 · Timeline</div>
+  <h1 class="sec-title">When the obligations bite.</h1>
+  <p>The Act enters into force in stages. The dates below are the applicable-from dates published in the consolidated text.</p>
+
+  <ul class="timeline">
+    <li>
+      <span class="date">02 February 2025</span>
+      <span class="what">Prohibitions and AI literacy</span>
+      <p>Title II prohibitions and Article 4 AI-literacy obligations apply.</p>
+    </li>
+    <li>
+      <span class="date">02 August 2025</span>
+      <span class="what">Governance, GPAI, penalties</span>
+      <p>Title V (general-purpose AI), Article 99 penalties, and governance provisions apply.</p>
+    </li>
+    <li>
+      <span class="date">02 August 2026</span>
+      <span class="what">High-risk regime applies</span>
+      <p>Title III high-risk obligations (including Articles 9, 10, 12, 13, 14, 15, 27) apply. This is the date organisations using RJE are typically preparing for.</p>
+    </li>
+    <li>
+      <span class="date">02 August 2027</span>
+      <span class="what">High-risk regime · embedded systems</span>
+      <p>Extended application date for high-risk AI systems embedded in regulated products under Annex I.</p>
+    </li>
+  </ul>
+</section>
+
+<section>
+  <div class="sec-num">03 · Article-level mapping</div>
+  <h1 class="sec-title">Where each output meets each obligation.</h1>
+  <p>The table maps the obligations of a high-risk provider or deployer onto the RJE outputs that contribute to each. Numbering follows the consolidated Act.</p>
+
+  <table class="act">
+    <thead><tr><th style="width:14%">Article</th><th style="width:30%">Obligation</th><th>Contribution from RJE output</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="art">Art. 9</td>
+        <td class="req">Risk management system</td>
+        <td class="role">Each deliberation produces a recorded analysis from a fundamental-rights perspective and an institutional-governance perspective. Halts surface extreme risk patterns automatically and become part of the risk register. The framing report documents the risks considered before the decision.</td>
+      </tr>
+      <tr>
+        <td class="art">Art. 10</td>
+        <td class="req">Data and data governance</td>
+        <td class="role">Cases are persisted with full lineage. Precedent retrieval is logged. The data underlying every decision can be reproduced from the case record. Inputs are versioned; precedent shifts are auditable.</td>
+      </tr>
+      <tr>
+        <td class="art">Art. 11</td>
+        <td class="req">Technical documentation (Annex IV)</td>
+        <td class="role">The Methodology document and this mapping describe the intended purpose, the inputs and outputs, the safeguards, and the human-oversight provisions. They contribute substantive material to the deployer's own Annex IV pack; they do not replace it.</td>
+      </tr>
+      <tr>
+        <td class="art">Art. 12</td>
+        <td class="req">Automatic record-keeping</td>
+        <td class="role">Every deliberation generates a structured record: framing report, vote distribution, expert analyses, decision rationale, DOCX. Records are persisted with full lineage and timestamps; retention and retrieval terms are set per tier at contracting.</td>
+      </tr>
+      <tr>
+        <td class="art">Art. 13</td>
+        <td class="req">Transparency and information to deployers</td>
+        <td class="role">The decision document is human-readable and discloses the five-perspective structure, the vote, the rationale, and any dissenting positions. The Methodology document gives the deployer a complete account of how outputs are produced.</td>
+      </tr>
+      <tr>
+        <td class="art">Art. 14</td>
+        <td class="req">Human oversight</td>
+        <td class="role">Halts route to human review by design. Confidence scores and vote distributions allow a reviewer to triage which decisions need closer attention. Dissenting expert analyses are preserved on record, supporting overrideability.</td>
+      </tr>
+      <tr>
+        <td class="art">Art. 15</td>
+        <td class="req">Accuracy, robustness, cybersecurity</td>
+        <td class="role">The precedent base evolves under version control. Outputs are reproducible from the case record. Authentication is per-session-token; transport is TLS 1.3. The safety screen is non-bypassable through the API surface.</td>
+      </tr>
+      <tr>
+        <td class="art">Art. 26</td>
+        <td class="req">Obligations of deployers</td>
+        <td class="role">RJE's output meets the deployer's record-keeping (Art. 26(6)) and human-oversight (Art. 26(2)) needs out of the box. Deployer-side annotations may be appended to the case record for the institution's own audit trail.</td>
+      </tr>
+      <tr>
+        <td class="art">Art. 27</td>
+        <td class="req">Fundamental Rights Impact Assessment</td>
+        <td class="role">The fundamental-rights evaluation perspective produces written analysis on every case. Combined with the per-case audit trail, this supplies the substantive material the FRIA expects. The Readiness Package bundles a FRIA template aligned to this output.</td>
+      </tr>
+      <tr>
+        <td class="art">Art. 50</td>
+        <td class="req">Transparency to natural persons</td>
+        <td class="role">The decision document is suitable for disclosure to affected parties under the appropriate scope. Operating constraints can be cited directly from the recorded analysis.</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="no-break">
+  <div class="sec-num">04 · What RJE does not cover</div>
+  <h1 class="sec-title">Obligations the deployer retains.</h1>
+  <p>The following obligations remain entirely with the provider or deployer. RJE's output may support them indirectly but does not discharge them.</p>
+  <ul>
+    <li><strong>Art. 16 (provider obligations) and Annex IV (technical documentation)</strong> &mdash; preparing and maintaining the full technical-documentation pack for the deployer's own high-risk system. RJE is not the deployer's high-risk system; it is decision-support infrastructure used by it.</li>
+    <li><strong>Art. 17 (quality management system)</strong> &mdash; the deployer's QMS for its own high-risk system.</li>
+    <li><strong>Art. 19 to 22 (conformity assessment, CE marking, registration)</strong> &mdash; the provider's own conformity assessment and registration of its high-risk system in the EU database.</li>
+    <li><strong>Art. 26(1) (use according to instructions)</strong> &mdash; deploying the high-risk system in accordance with its intended purpose.</li>
+    <li><strong>Art. 72 (post-market monitoring)</strong> &mdash; ongoing monitoring of the deployer's own high-risk system in real-world use.</li>
+  </ul>
+  <p>RJE's role is to make the parts of the regime that turn on <strong>structured, documented, defensible reasoning</strong> easier to satisfy.</p>
+</section>
+
+<section>
+  <div class="sec-num">05 · GDPR alignment</div>
+  <h1 class="sec-title">A note on data-protection obligations.</h1>
+  <p>RJE is deployed in compliance contexts where GDPR obligations frequently overlap with AI Act obligations. The following points are useful to coordinate with the data-protection function.</p>
+
+  <h3>Data residency</h3>
+  <p>Production infrastructure is hosted in the European Union. Deployment options for the Enterprise tier are discussed at contracting.</p>
+
+  <h3>Records of processing</h3>
+  <p>The audit trail supports Art. 30 GDPR records-of-processing obligations on the deployer side. The <code>case_id</code> and timestamp on every decision are designed to be cross-referenced with the deployer's own ROPA entry.</p>
+
+  <h3>Automated decision-making</h3>
+  <p>Where deployments invoke Art. 22 GDPR (decisions producing legal or similarly significant effects), the decision document supports the data subject's right to obtain meaningful information about the logic involved. The five anonymised expert analyses and the decision rationale together describe the reasoning in human-readable form.</p>
+
+  <h3>Subject-access requests</h3>
+  <p>The DOCX record produced at the time of deliberation is suitable for use in support of subject-access responses. Retrieval, language handling, and cross-border arrangements are set per tier at contracting.</p>
+</section>
+
+<section class="no-break">
+  <div class="sec-num">06 · Readiness Package</div>
+  <h1 class="sec-title">The compliance documentation companion.</h1>
+  <p>The EU AI Act Readiness Package bundles the team annual subscription with three months of priority support and a compliance documentation template pack aligned to the Articles above. It is available through Q3 2026 for organisations preparing for the August 2026 application date.</p>
+  <p>Template pack scope is agreed at contracting, against the deployer's specific high-risk classification and the obligations that follow. Enquiries to <code>growth.business@llulllab.com</code>.</p>
+  <p>The Readiness Package is &euro;2,870 per organisation per year, available until 30 September 2026.</p>
+</section>
+
+<div class="colophon">
+  <p><strong>Reflective Judgment Engine · EU AI Act Mapping · v1.0</strong> &nbsp; · &nbsp; Llull Lab &middot; Studio Llull &middot; Paris &nbsp; · &nbsp; growth.business@llulllab.com &nbsp; · &nbsp; llulllab.com/RJE</p>
+  <p>This document is informational. It does not constitute legal advice. Article numbering and dates follow Regulation 2024/1689 as published in the Official Journal. &copy; 2026 Llull Lab.</p>
+</div>
+
+</div>
+</div>
+</body>
+</html>
